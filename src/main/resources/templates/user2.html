@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+
+<div sec:authorize="isAuthenticated()">
+    <form  th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+
+<h2>User Info</h2>
+<br>
+
+Your name: <td th:text="${user.name}"/>
+<br>
+Your username: <td th:text="${user.username}"/>
+<br>
+Your surname: <td th:text="${user.name}"/>
+<br>
+Your email: <td th:text="${user.email}"/>
+<br>
+Your salary: <td th:text="${user.salary}"/>
+<br>
+Role(s):
+<tr th:each="role: ${user.roles}">
+    <td th:text="${role.name}"/>
+</tr>
+
+</body>
+</html>

@@ -4,8 +4,14 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
 
+<div sec:authorize="isAuthenticated()">
+    <form  th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+
+<h1>Welcome to Index PAGE!</h1>
 
 </body>
 </html>

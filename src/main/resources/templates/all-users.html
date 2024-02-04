@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div sec:authorize="isAuthenticated()">
+    <form  th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+
+<h2>All Users</h2>
+<br>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Salary</th>
+        <th>Operations</th>
+    </tr>
+    <tr th:each ="user : ${allUsers}">
+
+        <td th:utext="${user.name}"></td>
+        <td th:utext="${user.surname}"></td>
+        <td th:utext="${user.email}"></td>
+        <td th:utext="${user.salary}"></td>
+        <td>
+            <form th:action="@{/admin/updateInfo}">
+                <button type="submit" th:name="userId" th:value="${user.id}">Update</button>
+            </form>
+
+            <form th:action="@{/admin/deleteUser}">
+                <button type="submit" th:name="userId" th:value="${user.id}">Delete</button>
+            </form>
+        </td>
+    </tr>
+
+</table>
+
+<br>
+
+<input type="button" value="Add"
+       onclick="window.location.href = 'admin/addNewUser'">
+
+</body>
+</html>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
 
@@ -14,7 +15,7 @@
 <h2>User Info</h2>
 <br>
 
-<form th:method="POST" th:action="@{/user/saveUser}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/saveUser}" th:object="${user}">
 
     <input type="hidden" th:field="*{id}" id="id">
 
@@ -45,12 +46,18 @@
     <input type="text" th:field="*{salary}" id="salary"/>
     <br><br>
 
+    <label>Roles:
+        <input type="checkbox" name="roles"
 
-
+               th:each="role : ${allRoles}"
+               th:text="${role.name}"
+               th:value="${role.id}"
+               th:field="*{roles}"
+        />
+    </label>
+    <br><br>
 
     <input type="submit" value="OK"/>
-
-
 </form>
 
 </body>
