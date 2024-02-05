@@ -28,14 +28,14 @@ public class User implements UserDetails {
     private int salary;
 
     @NotEmpty(message = "username is required field")
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @NotEmpty(message = "password is required field")
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
     public User() {

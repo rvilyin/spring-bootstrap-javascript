@@ -10,7 +10,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,20 +29,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean saveUser(User user) {
-        User userFromDB = getUserByUsername(user.getUsername());
-        if (userFromDB != null && (user.getId() == 0 || user.getId() != userFromDB.getId())) {
-            return false;
-        }
+    public void saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
 
-        if (user.getId() == 0 || !user.getPassword().equals(getUser(user.getId()).getPassword())) {
+    @Override
+    public void updateUser(User user) {
+        if (!user.getPassword().equals(getUser(user.getId()).getPassword())) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
-
         userRepository.save(user);
-
-        return true;
     }
+
 
     @Override
     public User getUser(int id) {

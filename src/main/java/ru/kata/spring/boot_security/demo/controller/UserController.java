@@ -34,19 +34,4 @@ public class UserController {
 
         return "user";
     }
-
-    @PostMapping("/saveUser")
-    public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors());
-            return "user";
-        }
-
-        user.setRoles(userService.getUser(user.getId()).getRoles());
-
-        if (userService.saveUser(user)) {
-            return "redirect:/user";
-        }
-        return "username-exists-error";
-    }
 }

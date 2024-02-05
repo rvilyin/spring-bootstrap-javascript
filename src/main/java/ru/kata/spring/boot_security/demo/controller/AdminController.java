@@ -54,11 +54,13 @@ public class AdminController {
 			model.addAttribute("allRoles", roles);
 			return "user-info";
 		}
-
-		if (userService.saveUser(user)) {
-			return "redirect:/admin";
+		if (user.getId() == 0) {
+			userService.saveUser(user);
 		}
-		return "username-exists-error";
+		else {
+			userService.updateUser(user);
+		}
+		return "redirect:/admin";
 	}
 
 	@GetMapping("/updateInfo")
