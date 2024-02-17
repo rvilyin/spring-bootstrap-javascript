@@ -36,8 +36,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        if (!user.getPassword().equals(getUser(user.getId()).getPassword())) {
+        if (user.getPassword().isEmpty()) {
+            user.setPassword(getUser(user.getId()).getPassword());
+        }
+        else {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        if (user.getRoles().isEmpty()) {
+            user.setRoles(getUser(user.getId()).getRoles());
         }
         userRepository.save(user);
     }

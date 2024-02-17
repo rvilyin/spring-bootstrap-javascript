@@ -21,13 +21,10 @@ public class User implements UserDetails {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "age")
+    private int age;
 
-    @Column(name = "salary")
-    private int salary;
-
-    @NotEmpty(message = "username is required field")
+    @NotEmpty(message = "email is required field")
     @Column(name = "username", unique = true)
     private String username;
 
@@ -65,20 +62,13 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+
+    public int getAge() {
+        return age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public void setUsername(String username) {
@@ -95,17 +85,6 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", salary=" + salary +
-                '}';
     }
 
     @Override
@@ -141,5 +120,18 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

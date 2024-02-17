@@ -30,47 +30,31 @@ public class AdminController {
 	}
 
 	@GetMapping("")
-	public String showAllUsers(Model model) {
+	public String showAllUsers(Principal principal, Model model) {
+		User user = userService.getUserByUsername(principal.getName());
 		List<User> allUsers = userService.getAllUsers();
+		List<Role> roles = roleService.getAllRoles();
 		model.addAttribute("allUsers", allUsers);
+		model.addAttribute("currentUser", user);
+		model.addAttribute("allRoles", roles);
+		model.addAttribute("newUser", new User());
 
 		return "all-users";
 	}
 
-	@GetMapping("/addNewUser")
-	public String addNewUser(Model model) {
-		User user = new User();
-		List<Role> roles = roleService.getAllRoles();
-		model.addAttribute("user", user);
-		model.addAttribute("allRoles", roles);
-
-		return "user-info";
-	}
 
 	@PostMapping("/saveUser")
-	public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			List<Role> roles = roleService.getAllRoles();
-			model.addAttribute("allRoles", roles);
-			return "user-info";
-		}
-		if (user.getId() == 0) {
-			userService.saveUser(user);
-		}
-		else {
-			userService.updateUser(user);
-		}
+	public String saveUser(@ModelAttribute("newUser") User user) {
+		userService.saveUser(user);
+
 		return "redirect:/admin";
 	}
 
-	@GetMapping("/updateInfo")
-	public String updateUser(@RequestParam("userId") int id, Model model) {
-		User user = userService.getUser(id);
-		List<Role> roles = roleService.getAllRoles();
-		model.addAttribute("user", user);
-		model.addAttribute("allRoles", roles);
+	@PostMapping("/updateUser")
+	public String updateUser(@ModelAttribute("user") User user) {
+		userService.updateUser(user);
 
-		return "user-info";
+		return "redirect:/admin";
 	}
 
 	@GetMapping("/deleteUser")

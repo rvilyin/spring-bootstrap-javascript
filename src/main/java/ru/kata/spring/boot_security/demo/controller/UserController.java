@@ -24,13 +24,14 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @GetMapping("")
     public String showUserInfo(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/";
         }
-        model.addAttribute("user", user);
+        model.addAttribute("currentUser", user);
 
         return "user";
     }
