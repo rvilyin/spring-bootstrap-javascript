@@ -32,12 +32,9 @@ public class AdminController {
 	@GetMapping("")
 	public String showAllUsers(Principal principal, Model model) {
 		User user = userService.getUserByUsername(principal.getName());
-		List<User> allUsers = userService.getAllUsers();
 		List<Role> roles = roleService.getAllRoles();
-		model.addAttribute("allUsers", allUsers);
 		model.addAttribute("currentUser", user);
 		model.addAttribute("allRoles", roles);
-		model.addAttribute("newUser", new User());
 
 		return "all-users";
 	}
